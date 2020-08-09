@@ -1,2 +1,2 @@
-# Extension for Spark Scheduling with priority on pre-loaded RDDs
+# Spark job used for testing scheduling extension
 
