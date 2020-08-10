@@ -7,7 +7,7 @@ val sparkVersion = "2.4.6"
 
 lazy val root = (project in file(".")).
   settings(
-    name := "spark-testing-job",
+    name := "spark-job",
 
     // sparkComponents := Seq(),
 

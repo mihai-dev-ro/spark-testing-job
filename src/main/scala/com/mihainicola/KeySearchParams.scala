@@ -5,7 +5,8 @@ package com.mihainicola
 case class KeySearchParams(
   inputLocation: String = "unknown",
   searchKey: String = "N/A",
-  resultsLocation: String = "results.txt")
+  resultsLocation: String = "results.txt",
+  jobJarPath: String = "N/A")
   extends SparkJobParams
 
 class KeySearchParamsParser extends SparkJobParamsParser[KeySearchParams](
@@ -28,4 +29,10 @@ class KeySearchParamsParser extends SparkJobParamsParser[KeySearchParams](
       arg.copy(resultsLocation = value)
     })
     .text("Results location is required")
+
+  opt[String]('j', "job-jar").required
+    .action((value, arg) => {
+      arg.copy(resultsLocation = value)
+    })
+    .text("Job Jar is required")
 }
