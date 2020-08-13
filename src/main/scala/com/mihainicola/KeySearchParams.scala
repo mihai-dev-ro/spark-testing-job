@@ -32,7 +32,7 @@ class KeySearchParamsParser extends SparkJobParamsParser[KeySearchParams](
 
   opt[String]('j', "job-jar").required
     .action((value, arg) => {
-      arg.copy(resultsLocation = value)
+      arg.copy(jobJarPath = value)
     })
     .text("Job Jar is required")
 }
