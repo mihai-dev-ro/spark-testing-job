@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 import com.mihainicola.storage._
 import org.apache.livy.scalaapi.ScalaJobContext
 
-object KeySearch extends SparkJob[Unit, Long, KeySearchParams] {
+object KeySearch extends SparkJob[Long, Array[String], KeySearchParams] {
 
   override def appName: String = "Keyword search"
 
@@ -17,18 +17,23 @@ object KeySearch extends SparkJob[Unit, Long, KeySearchParams] {
     ctx.setSharedVariable[RDD[String]]("wikipediaEntries", wikipediaEntries)
 
     // show total count (and trigger the loading into memory)
-    println(s"Total lines in doc: ${wikipediaEntries.count()}")
+    wikipediaEntries.count()
   }
 
   override def fnCompute = (params: KeySearchParams, ctx: ScalaJobContext) => {
     val wikipediaEntries = ctx.getSharedVariable[RDD[String]]("wikipediaEntries")
 
-      // get the results of the search
+    // get the results of the search
+    // val keyword = params.searchKey
+    // wikipediaEntries.filter(line => line.contains(keyword))
+    //   .map(line => line.substring(0, 100) ++ "...")
+    //   .map(line => (line, 1))
+    //   .collect()
+
     val keyword = params.searchKey
-    wikipediaEntries.filter(line => line.contains(keyword))
-      .map(line => line.substring(0, 100) ++ "...")
-      .map(line => (line, 1))
-      .count()
+    wikipediaEntries
+      .filter(line => line.contains(keyword))
+      .collect()
   }
 
 }
