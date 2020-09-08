@@ -1,4 +1,4 @@
-package com.mihainicola
+package com.mihainicola.sparkjobfull
 
 import org.apache.spark.rdd._
 import org.apache.livy.scalaapi.ScalaJobContext

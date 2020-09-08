@@ -1,11 +1,12 @@
-package com.mihainicola
+package com.mihainicola.sparkjobfull
 
-// import scopt.OptionParser
 
 case class KeySearchParams(
-  inputLocation: String = "unknown",
+  inputRootFileLocation: String = "unknown",
+  nbFiles: Int = 1,
   searchKey: String = "N/A",
-  resultsLocation: String = "results.txt")
+  resultsLocation: String = "results.txt",
+  appJars: List[String] = List.empty)
   extends SparkJobParams
 
 class KeySearchParamsParser extends SparkJobParamsParser[KeySearchParams](
@@ -13,7 +14,13 @@ class KeySearchParamsParser extends SparkJobParamsParser[KeySearchParams](
 
   opt[String]('i', "input").required
     .action((value, arg) => {
-      arg.copy(inputLocation = value)
+      arg.copy(inputRootFileLocation = value)
+    })
+    .text("Input Root File is required")
+
+  opt[Int]('n', "nb-files").required
+    .action((value, arg) => {
+      arg.copy(nbFiles = value)
     })
     .text("Input file is required")
 

@@ -7,7 +7,7 @@ val sparkVersion = "2.4.6"
 
 lazy val root = (project in file(".")).
   settings(
-    name := "spark-job",
+    name := "kyme-sparkjobfull",
 
     // sparkComponents := Seq(),
 
@@ -20,9 +20,12 @@ lazy val root = (project in file(".")).
 
     libraryDependencies ++= Seq(
       "org.apache.spark"    %% "spark-core"         % sparkVersion          % Provided,
-      "com.github.scopt"    %% "scopt"              % "3.7.1"               % Compile,
-      "org.apache.livy"     %  "livy-api"           % "0.7.0-incubating",
-      "org.apache.livy"     %% "livy-scala-api"     % "0.7.0-incubating",
+      "org.apache.spark"    %% "spark-sql"          % sparkVersion          % Provided,
+      "com.github.scopt"    %% "scopt"              % "3.7.1"               % Provided,
+      "org.apache.livy"     %  "livy-api"           % "0.7.0-incubating"    % Provided,
+      "org.apache.livy"     %% "livy-scala-api"     % "0.7.0-incubating"    % Provided,
+
+      "ch.cern.sparkmeasure" %% "spark-measure"     % "0.16",
 
       "org.scalatest"       %% "scalatest"          % "3.0.1"               % Test
     ),
@@ -44,5 +47,10 @@ lazy val root = (project in file(".")).
       case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)
-    }
+    },
+
+    assemblyShadeRules in assembly := Seq(
+      ShadeRule.rename("okio.**" -> "com.shaded.okio.@1").inAll,
+      ShadeRule.rename("okhttp3.**" -> "com.shaded.okhttp3.@1").inAll
+    )
   )

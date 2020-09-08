@@ -1,4 +1,4 @@
-package com.mihainicola.storage
+package com.mihainicola.sparkjobfull.storage
 
 import org.apache.spark.rdd._
 

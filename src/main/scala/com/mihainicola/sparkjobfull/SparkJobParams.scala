@@ -1,4 +1,4 @@
-package com.mihainicola
+package com.mihainicola.sparkjobfull
 
 import scopt.OptionParser
 
